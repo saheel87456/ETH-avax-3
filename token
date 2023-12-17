@@ -1,0 +1,31 @@
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity ^0.8.9;
+
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+
+contract MyToken is ERC20, Ownable(msg.sender) {
+    // Token details
+    string public title;
+    string public code;
+
+    // Constructor
+    constructor(string memory _title, string memory _code) ERC20(_title, _code) {
+        title = _title;
+        code = _code;
+
+        _mint(msg.sender, 50);
+    }
+
+    function mint(address _to, uint256 _portion) public onlyOwner {
+        _mint(_to, _portion);
+    }
+
+    function burn(uint256 _portion) public {
+        _burn(msg.sender, _portion);
+    }
+
+    function transfer_tk(address _to, uint256 _portion) public {
+        _transfer(msg.sender, _to, _portion);
+    }
+}
